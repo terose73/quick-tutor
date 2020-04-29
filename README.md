@@ -3,6 +3,11 @@ To run locally, ensure pip/Python3 and Django are correctly installed
 1. Run pip install -r requirements.txt in a terminal window
 2. Run python manage.py runsslserver in a terminal window
 
+create a .env file with the following variables 
+
+DATABASE_URL=sqlite:///db.sqlite3
+GOOGLE_API_KEY={your google api key here w/ google maps enabled}
+
 Application hosted on heroku at   https://segfaults.herokuapp.com/
 
 Once there, you can read the main page for an over view of the project.
