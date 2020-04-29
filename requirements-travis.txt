@@ -1,0 +1,9 @@
+Django
+gunicorn
+dj_database_url
+python-dotenv
+django-secure
+social-auth-app-django
+django-mapbox-location-field
+whitenoise
+django-sslserver

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+
+<body>
+  <div id='map' style='height: 300px;'></div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoidG9tYXRvcGllIiwiYSI6ImNrNndvemRvdzBmMDUzbW1ndDU2bmdxaTAifQ.qbLK7dK0nlmBY7FByF9Shw';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-78.5045525, 38.0355725],
+      zoom: 14,
+
+
+    });
+    let geoTracker = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    });
+
+    map.addControl(
+      geoTracker
+    );
+
+    setTimeout(function () {
+      geoTracker.trigger(); },1000);
+
+  </script>
+</body>
+<div class="jumbotron">
+
+  <script>
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+    function success(pos) {
+      $.post({
+        url: "/submit_location/",
+
+        data: { latitude: pos.coords.latitude, longitude: pos.coords.longitude },
+
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+      });
+    }
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    navigator.geolocation.getCurrentPosition(success, error, options);
+
+    var geojson = {}
+   {% for person in users_list %}
+      // add markers to map
+        geojson = {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [{{person.userprofile.longitude}}, {{person.userprofile.latitude}}]
+          },
+          properties: {
+            title: '{{person.first_name}} {{person.last_name}}',
+            description: 'Status: {{person.userprofile.status}}',
+            subject: 'Subject: {{person.userprofile.subject}}',
+            email: '{{person.email}}',
+           }
+           }]
+           }
+
+      geojson.features.forEach(function(marker) {
+        console.log("here")
+
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el)
+          .setLngLat(marker.geometry.coordinates)
+.setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p><p>' + marker.properties.subject + '</p><p>' + marker.properties.email + '</p>'))
+          .addTo(map);
+      });
+
+    {% endfor %}
+  </script>
+
+  {% if user.is_authenticated %}
+ 
+  <div class="container p-3 mb-2 bg-light text-dark">
+    <p class="h5">
+    Logged in as {{ user.first_name }} {{ user.last_name }} {{ user.username }}
+    {{user.date_joined }} {{ user.email }}
+    </p>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock content %}

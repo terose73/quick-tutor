@@ -1,0 +1,7 @@
+.idea
+*.pyc
+quicktutor/
+staticfiles/
+*.sqlite3
+__pycache__/
+'.env' 

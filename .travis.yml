@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.8"
+install:
+  - pip install -r requirements-travis.txt
+script:
+  - python manage.py collectstatic
+  - python manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: fl/LGb/nj8WZlkbRTpiUML2tjiLXMSG3MZ+vW13U5IIHggaALRR+fhKz24jJsXTujwrI4NXGqo5VIpvOTpSefw2FJ9OYLZokqzMjXfrat3GAh/d2uRS1zCF0vv/lcQ7CCAr9/ESUWHu426hygHZneHzGkIN8tFknN+x2QAdJxSzQlM5n/Zf1MawDEFEB6CtaLBKJvTLxdaPyKPfjrCt18TCki5juckHhdEx9GIAJwQUImO6ubfpbXYwXHS9iRS8ImPDPaEdvQiByX7vtQjdhsteP+BVA08zdM6HAL9nGRWl8rNSXfHUdlFsz1k8j1UtxD9Fis0LLNYfrLMQ4qMsVRKDUrmJT1Vl9lf3DJDALE5deffp7Z8RG1SVWrwx1QXWE+nvVRV6yMIaqf9lnnHo43ebON3NCMB0bevqEaEt7lOCurDeCzGNNDhjsb0krdpaAt7DEINDLsDbVigKnLAaw85nr/nZ+BT8rYvkAAj6sfi90tbZkhwFi1/Ji248F/pA0celIaIV0b+WK8xp/sK+McTMn72uIBosa+KmbwxNySWLfQgfxoKYL76jeRB4X83/lHZNdcCf0WjtKZSs6EaNmX66T2EFyIT6dj91/UCT9aap0qVxk2MeC9f+ugEoPk7oiAX1IrQxzNBd0Gl+hm5NdCUdIKSV3kuhTiyyDaBvfaCI=
+  app: segfaults
+  on:
+    repo: uva-cs3240-s20/project-102-segfaults

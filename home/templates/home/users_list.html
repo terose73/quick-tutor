@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="jumbotron">
+    <table class="table table-hover table-info">
+        <thead>
+            <tr>
+                <th scope=" col">Email Address</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Subject Focus</th>
+                <th scope="col">Location </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in users_list %}
+            <tr>
+                <th scope="row">
+
+                    {{ person.email | urlize}}
+
+                </th>
+                <td>{{person.first_name}}</td>
+                <td>{{person.userprofile.status}}</td>
+                <td>{{person.userprofile.subject}}</td>
+                <td>{{person.userprofile.geodata}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</div>
+
+
+<div class="container-fluid">
+
+
+</div>
+{% endblock content %}
