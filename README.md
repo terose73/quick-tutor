@@ -1,8 +1,9 @@
-Welcome to project-102-segfaults
+To run locally, ensure pip/Python3 and Django are correctly installed
 
-How to get started: 
+1. Run pip install -r requirements.txt in a terminal window
+2. Run python manage.py runsslserver in a terminal window
 
-Head on over to     https://segfaults.herokuapp.com/
+Application hosted on heroku at   https://segfaults.herokuapp.com/
 
 Once there, you can read the main page for an over view of the project.
 In the upper right hand corner you can use your email to sign in.
@@ -22,8 +23,6 @@ The button will be in the upper right corner.
 
 Once you're done using the app, please make sure to logout.
 The logout button can be found in the upper right corner. 
-
-
 
 
 Framework and Library Licenses:
